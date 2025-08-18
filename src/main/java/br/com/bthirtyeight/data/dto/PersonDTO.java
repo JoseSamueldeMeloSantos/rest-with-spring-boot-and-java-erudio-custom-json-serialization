@@ -1,27 +1,38 @@
 package br.com.bthirtyeight.data.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.fasterxml.jackson.annotation.JsonProperty;
+//import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import br.com.bthirtyeight.serializer.GenderSerializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 //define a ordem de exibição do Json
-@JsonPropertyOrder({"address","id","first_Name","last_Name","gender"})
+//@JsonPropertyOrder({"address","id","first_Name","last_Name","gender"})
 public class PersonDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    @JsonProperty("first_name")//muda o nome de exibição do atributo no arquivo Json(necessário mudar nome no @JsonPropertyOrder)
+    //@JsonProperty("first_name")//muda o nome de exibição do atributo no arquivo Json(necessário mudar nome no @JsonPropertyOrder)
     private String firstName;
 
-    @JsonProperty("last_name")
+    //@JsonProperty("last_name")
     private String lastName;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")//para formatar uma data para o padrão brasileiro
+    private Date birthDay;
+
+    //@JsonIgnore//faz com que o atributo nao seja enviado para o json(otimo para segurança de algum dado)
     private String address;
 
-    @JsonIgnore//faz com que o atributo nao seja enviado para o json(otimo para segurança de algum dado)
+    @JsonSerialize(using = GenderSerializer.class)//Define a serialização da classe passada como padrão
     private String gender;
 
     public PersonDTO() {
@@ -75,16 +86,12 @@ public class PersonDTO implements Serializable {
         this.gender = gender;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        PersonDTO personDTO = (PersonDTO) o;
-        return Objects.equals(id, personDTO.id) && Objects.equals(firstName, personDTO.firstName) && Objects.equals(address, personDTO.address) && Objects.equals(gender, personDTO.gender);
+    public Date getBirthDay() {
+        return birthDay;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, address, gender);
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
     }
 }
 
