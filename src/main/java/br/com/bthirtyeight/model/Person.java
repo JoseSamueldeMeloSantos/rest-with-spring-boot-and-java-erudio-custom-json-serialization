@@ -20,7 +20,7 @@ public class Person implements Serializable {
     ///         tbm define as propriedades dessa coluna(atributo)
     ///
     ///         se o nome do atributo for igual ao nome da coluna entao nao e preciso colocar o name
-    @Column(name = "firs_name", nullable = false, length = 80)
+    @Column(name = "first_name", nullable = false, length = 80)
     private String firstName;
     @Column(name = "last_name", nullable = false, length = 80)
     private String lastName;
