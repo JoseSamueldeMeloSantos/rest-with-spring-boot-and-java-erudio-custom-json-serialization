@@ -1,18 +1,27 @@
 package br.com.bthirtyeight.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+//define a ordem de exibição do Json
+@JsonPropertyOrder({"address","id","first_Name","last_Name","gender"})
 public class PersonDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
-
-
+    @JsonProperty("first_name")//muda o nome de exibição do atributo no arquivo Json(necessário mudar nome no @JsonPropertyOrder)
     private String firstName;
+
+    @JsonProperty("last_name")
     private String lastName;
     private String address;
+
+    @JsonIgnore//faz com que o atributo nao seja enviado para o json(otimo para segurança de algum dado)
     private String gender;
 
     public PersonDTO() {
